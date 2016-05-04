@@ -26,7 +26,6 @@ chart.style("font", "10px")
     .style("margin-bottom", "5px");
 
 // d3.select(".chart")
-    debugger;    
     chart.selectAll("div")
     .data(data)
         .enter().append("div")
