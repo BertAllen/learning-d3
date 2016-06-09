@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Circle Animation</title>
+    <link href="bootstrap-1.1.0.min.css" type="text/css"></link>
+    <script src="d3.min.js"></script>
+  </head>
+
+  <body>
+   <div id="demo">
+     <svg id="svgdemo"></svg>
+   </div>
+    
+   <script> 
+    // https://gist.github.com/1484345
+    function paintCircles() {
+      //an object to contain some random source data
+        var data=[];
+        var colors = ["red", "green", "blue"];
+        w=window.innerWidth;
+        h=window.innerHeight; 
+        //select the thing we're going to put the shapes in, set its width/height
+        svg=d3.select("#svgdemo")
+          .attr("width",w)
+          .attr("height",h);
+        //create a function that can constrain the output of our data
+        xcompressor=d3.scale.linear().domain([0,1]).range([0,w]);
+        ycompressor=d3.scale.linear().domain([0,1]).range([0,h]);
+        rcompressor=d3.scale.linear().domain([0,1]).range([20,50]);
+        
+        for(var i=0;i<1000;i+=1) {
+          data.push({
+            x: Math.random(),
+            y: Math.random(),
+            r: Math.random(),
+            c: colors[i % 3]
+          });
+        }
+          
+        svg.selectAll("circle")
+          .remove()
+          .data(data)
+          .enter()
+          .append("svg:circle")
+          .attr("cx",function(d){return xcompressor(d.x);})
+          .attr("cy",function(d){return ycompressor(d.y);})
+          .attr("r",function(d){return rcompressor(d.r);})
+          .attr("fill",function(d){return rcompressor(d.c);})
+          .attr("fill-opacity", 0.5)
+          .on("mouseover",function(){
+            d3.select(this).transition()
+            .attr("cy",function(){return ycompressor(Math.random());})
+            .attr("cx",function(){return xcompressor(Math.random());})
+            .duration(1000)
+            .ease("out-elastic",1,1)
+          });
+      }
+
+      (function(){
+        paintCircles();
+        window.addEventListener("resize",paintCircles,false);
+      })();
+    </script>
+  </body>
+</html>
+
