@@ -1,9 +1,3 @@
-//I think this will be fun!
-d3.select("body")
-    .style("color", "#0f0")
-    .style("background-color", "#999")
-    .style("font-size", "20px");
-
 d3.selectAll("section")
     .attr("class", "special")
     .append("div")
@@ -13,30 +7,47 @@ var section = d3.selectAll("section");
 section.append("div").html("Furst ---");
 section.append("div").html("Second ----");
 
-var data = [4, 8, 15, 16, 23, 42];
+// Second time for the D3 tutorial
+// d3.selectAll("svg")
+//     .style("fill", "red")
+//     .attr('cy', 60)
+    // .exit().remove();
 
-var chart = d3.select(".chart");
+var svg = d3.selectAll("svg");
+// var circle = svg.selectAll("circle")
+// .style("fill", "orange")
+//     // .attr('cx', function (d, i) { return i * 100 + 30; })
+//     // .attr('r', function (d) { return Math.sqrt(d); })
+//     // .attr("r", 30);
+// var circleEnter = circle.enter().append("circle");
+//     // .append('circle')
+//     circleEnter.attr("cy", 60)
+//     .attr("cx", function (d, i) { return d * 100 + 30; })
+//        .attr("r", function (d) { return Math.sqrt(d);})
 
-chart.style("font", "10px")
-    .style("background-color", "steelblue")
-    .style("text-align", "right")
-    .style("padding", "10px")
-    .style("margin", "1px")
-    .style("color", "white")
-    .style("margin-bottom", "5px");
+// circle.attr("cx", function () { return Math.random() * 720; });
+var data = [{ x: 32, y: 97 }, { x: 57, y: 120 }, { x: 112, y: 44 }, { x: 293, y: 20 }];
 
-// d3.select(".chart")
-    chart.selectAll("div")
-    .data(data)
-        .enter().append("div")
-    .style("width", function (d) { return d * 10 + "px"; })
-    .text(function (d) { return d; })
+// svg.append("circle")
+//     .attr("cx", d.x)
+//     .attr("cy", d.y)
+//     .attr("r", 25);
 
-    var chart = d3.select(".chart");
-    var bar = chart.selectAll("div");
-    var barUpdate = bar.data(data);
-    var barEnter = barUpdate.enter().append("div");
-    barEnter.style("width", function (d) { return d * 10 + "px"; });
-    barEnter.text(function (d) { return d });
+var circle = svg.selectAll("circle")
+    .data(data);
 
-    
+circle.exit().remove();
+
+circle.enter().append("circle").attr("r", 10);
+
+  circle.style("fill", "red")  
+    .attr("cx", function(d) { return d.x; })
+    .attr("cy", function(d) { return d.y; })
+
+  var xcisn = d3.selectAll("h1");
+  xcisn.append("h1")
+    .html("Can I stick this text in here?");
+  console.log(xcisn);
+  xcisn.transition().duration(3000).style("color", "green")
+
+circle.transition().styleTween("color", function () { return d3.interpolate("red", "green") });
